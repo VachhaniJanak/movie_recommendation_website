@@ -1,0 +1,145 @@
+.recommended-container {
+  z-index: -2;
+  margin: 1rem;
+  display: grid;
+  row-gap: 1rem;
+  column-gap: 1rem;
+  font-size: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+.recommended-item {
+  text-decoration: none;
+  border-radius: 10px;
+  background-color: #272626;
+}
+
+.mylists-items {
+  min-height: 14rem;
+  max-height: 18rem;
+  width: 14rem;
+  margin: 0.3rem;
+  display: block;
+}
+
+.recommended-item a {
+  z-index: 0;
+  background: transparent;
+  text-decoration: none;
+}
+.recommended-item .thumbnail {
+  width: 100%;
+  height: 65%;
+  position: relative;
+  border-radius: 10px 10px 0 0;
+  display: block;
+}
+
+.movies-details {
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  background: transparent;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.movies-details .title {
+  background: transparent;
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 0.3rem;
+  color: #c7b8b8;
+  flex-grow: 1;
+}
+
+.movies-details .details {
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+}
+
+.movies-details .details .year {
+  background: transparent;
+  padding-top: 0.4rem;
+  color: #a6a6a6;
+}
+
+.movies-details .details .rating {
+  background: transparent;
+  color: rgb(218, 127, 16);
+}
+
+.movies-details .details .language {
+  background: transparent;
+}
+
+.movies-details .details .runtime {
+  background: transparent;
+}
+
+.movies-details .details .rating span {
+  background: transparent;
+  color: rgb(218, 127, 16);
+}
+
+.recommended-item .play-icon {
+  z-index: 1;
+  background: transparent;
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.recommended-item:hover .play-icon {
+  opacity: 0.8;
+}
+
+.recommended-item a:hover {
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.recommended-item a:after {
+  content: "";
+  position: absolute;
+  border-radius: 100%;
+  background: #ffffff;
+  width: 230px;
+  height: 230px;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.7s, transform 0.7s, width 0.7s, height 0.7s;
+}
+
+.recommended-item a:active:after {
+  width: 0;
+  height: 0;
+  opacity: 0.9;
+  transition: 0s;
+}
+
+@media (min-width: 320px) {
+  .recommended-item {
+    .movies-details {
+      font-size: 18px;
+    }
+  }
+}
+
+@media (min-width: 481px) {
+  .recommended-item {
+    .movies-details {
+      font-size: 16px;
+    }
+  }
+}

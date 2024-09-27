@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Registration{% endblock  %}
+
+{% block css_file %}
+    <link rel="icon" type="image/x-icon" href="{% static "logo.ico" %}">
+    <link rel="stylesheet" href="{% static "style.css" %}"> 
+    <link rel="stylesheet" href="{% static "registration.css" %}"> 
+{% endblock  %}
+
+{% block content %}
+    <div class="container">
+      <div class="center">
+        <h1>Create Account</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="txt_field">
+                {{reg_form.username}}
+                <span></span>
+                <div class="error">{{reg_form.username.errors}}</div>
+            </div>
+            <div class="txt_field">
+                {{reg_form.email}}
+                <span></span>
+                <div class="error">{{reg_form.email.errors}}</div>
+                <div class="error">{{email_error}}</div>
+            </div>
+            <div class="txt_field">
+                {{reg_form.password}}
+                <span></span>
+                <div class="error">{{reg_form.password.errors}}</div>
+            </div>
+                <div class="txt_field">
+                {{reg_form.conform_password}}
+                <span></span>
+                <div class="error">{{password_error}}</div>
+                <div class="error">{{reg_form.conform_password.errors}}</div>
+            </div>
+            <div class="message">{{message}}</div>
+            <input name="submit" type="Submit" value="Create" />
+            <div class="signin_link">
+                Already account ? <a href="login">SignIn</a>
+            </div>
+        </form>
+      </div>
+    </div>
+{% endblock %}

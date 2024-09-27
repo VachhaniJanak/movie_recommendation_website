@@ -1,0 +1,52 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block title %}Result{% endblock title %} 
+
+{% block css_file %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="shortcut icon" href="{% static "logo.png" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static "css/index.css" %}" />
+    <link rel="stylesheet" href="{% static "css/header.css" %}" />
+    <link rel="stylesheet" href="{% static "css/result.css" %}" />
+    <link rel="stylesheet" href="{% static "css/recommended.css" %}" />
+
+{% endblock css_file %} 
+
+{% block content %} 
+<div class="main" id="main">
+    {% comment %} Header  {% endcomment %}
+    {% include "header.html" %}
+
+    {% comment %} Search Result {% endcomment %}
+    <div class="search-title">Search result for: <span>{{query}}</span></div>
+      <div class="recommended-container" id="recommended-container">
+        {% for movie in movies %}
+        <div class="recommended-item">
+          <div class="mylist" movie-id={{movie.id}}>
+            <i class="fa fa-plus"></i>
+          </div>
+          {% include "recommend.html" %}
+        </div>
+        {% endfor %}
+    </div> 
+
+    {% comment %} Message {% endcomment %}
+    {% include "message.html" %}
+
+</div>
+
+{% endblock content %}
+
+{% block js_file %}
+    <script src="{% static "js/url.js" %}"></script>
+    <script src="{% static "js/search.js" %}"></script>
+    {% if result_page %}
+    <script type="module" src="{% static "js/result.js" %}"></script>
+    {% else %}
+    <script type="module" src="{% static "js/genre.js" %}"></script>
+    {% endif %}
+{% endblock js_file %}

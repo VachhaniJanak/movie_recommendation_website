@@ -1,0 +1,15 @@
+{% load static %}
+<div class="mylist" movie-id={{movie.id}}>
+  <i class="fa fa-plus"></i>
+</div>
+<img class="play-icon" src="{% static "play-button.svg" %}" alt="" srcset="" />
+<a href="/home/watch?movieid={{movie.id}}">
+  <img src="{{movie.vertical_poster.url}}" />
+  <div
+    class="notwatched {% if movie.id in watch_ids %}watched{% endif %}"
+  ></div>
+  <div class="details">
+    <div>{{movie.title}}</div>
+    <div>{{movie.year}}</div>
+  </div>
+</a>

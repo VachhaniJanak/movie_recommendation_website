@@ -1,0 +1,127 @@
+.horizontal-container {
+  z-index: -2;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  font-size: 14px;
+}
+
+.horizontal-container > * {
+  flex: 0 0 auto;
+  min-width: 10rem;
+  margin-right: 1rem;
+}
+
+.horizontal-container::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar */
+}
+
+.horizontal-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.horizontal-container-item {
+  max-width: 10rem;
+  display: block;
+  z-index: -1;
+  background-color: #272626;
+  margin: 0.3rem;
+  border-radius: 10px;
+  position: relative;
+}
+
+.horizontal-container-item .rank {
+  z-index: 1;
+  color: white;
+  font-size: 0.8rem;
+  border-radius: 10px 0 3px 0;
+  padding: 0.2rem;
+  display: inline-block;
+  background-color: red;
+  position: absolute;
+}
+
+.horizontal-container-item .details {
+  text-align: center;
+  font-weight: 600;
+  background: transparent;
+  padding: 3px;
+  display: flex;
+  height: 25%;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.horizontal-container-item .details :nth-child(1) {
+  display: contents;
+  background: transparent;
+  flex-grow: 0.5;
+}
+
+.horizontal-container-item .details :nth-child(2) {
+  display: block;
+  padding-bottom: 1rem;
+  background: transparent;
+  font-weight: 100;
+  color: rgb(140, 145, 150);
+}
+.horizontal-container-item a {
+  z-index: 0;
+  background: transparent;
+  text-decoration: none;
+}
+.horizontal-container-item a img {
+  width: 100%;
+  height: 75%;
+  border-radius: 10px 10px 0 0;
+  display: block;
+}
+
+.horizontal-container-item .play-icon {
+  z-index: 0;
+  background: transparent;
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.horizontal-container-item a:hover {
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.horizontal-container-item:hover .play-icon {
+  opacity: 1;
+}
+
+/* Click animation */
+.horizontal-container-item a:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: #ffffff;
+  width: 180px;
+  height: 180px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.7s, transform 0.7s, width 0.7s, height 0.7s;
+}
+
+.horizontal-container-item a:active:after {
+  width: 0px;
+  height: 0px;
+  opacity: 0.9;
+  transition: 0s;
+}

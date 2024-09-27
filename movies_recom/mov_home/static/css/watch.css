@@ -1,0 +1,209 @@
+.header {
+  position: absolute;
+  z-index: 10;
+  background: transparent;
+  margin: 1rem 0 1rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.header a {
+  z-index: 10;
+  font-size: 2rem;
+  background: transparent;
+  text-decoration: none;
+  display: inline-block;
+  padding-right: 20px;
+  padding-left: 10px;
+}
+
+.header a:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.header div {
+  font-size: 1.8rem;
+  background: transparent;
+  display: inline-block;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+}
+
+.video-container video {
+  z-index: 10;
+  width: 98%;
+  height: 700px;
+  border: none;
+  margin: 1%;
+  border-radius: 20px;
+}
+
+.description {
+  background-color: #252525;
+  margin: 1%;
+  padding: 1rem 1rem 1rem 1rem;
+  border-radius: 15px;
+}
+.description div,
+h3,
+p {
+  background: transparent;
+}
+
+.feedback {
+  z-index: 10;
+  margin: 1%;
+  display: block;
+  padding: 1rem 1rem 1rem 1rem;
+  border-radius: 1rem;
+  background-color: #252525;
+}
+
+.card {
+  z-index: 10;
+}
+
+.feedback h3 {
+  padding-bottom: 5px;
+  color: #dfdfdf;
+}
+
+.submitbtn {
+  z-index: 10;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  background-color: #3362b9;
+  border-radius: 0.5rem;
+}
+
+.submitbtn:hover {
+  cursor: pointer;
+  background-color: #4868a4;
+}
+
+.star {
+  background: transparent;
+  z-index: 10;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.one {
+  color: rgb(255, 0, 0);
+}
+
+.two {
+  color: rgb(255, 106, 0);
+}
+
+.three {
+  color: rgb(251, 255, 120);
+}
+
+.four {
+  color: rgb(255, 255, 0);
+}
+
+.five {
+  color: rgb(24, 159, 14);
+}
+
+.description .Plot {
+  margin: 1rem 0rem 1rem 0rem;
+}
+
+.description .Plot h3 {
+  padding-bottom: 5px;
+  color: #dfdfdf;
+}
+
+.description .Information {
+  margin: 1rem 0rem 1rem 0rem;
+}
+
+.description .Information h3 {
+  padding-bottom: 5px;
+  color: #dfdfdf;
+}
+
+.description .Information tr td span {
+  background-color: #252525;
+  padding-right: 15px;
+  color: rgb(134, 136, 137);
+  font-weight: 100;
+}
+
+.description .Information table td {
+  word-wrap: break-word;
+}
+
+.description .Information table,
+tr,
+td,
+span {
+  background-color: #252525;
+}
+
+.description .like-dislike {
+  z-index: 1;
+  margin: 1rem 0rem 1rem 0rem;
+}
+
+.description .like-dislike i {
+  z-index: 1;
+  padding: 4px 20px 4px 20px;
+  font-size: 1.4rem;
+  background-color: #3d3d3d;
+}
+
+.description .like-dislike :nth-child(1) {
+  z-index: 1;
+  border-radius: 20px 0 0 20px;
+}
+
+.description .like-dislike :nth-child(2) {
+  z-index: 1;
+  border-radius: 0 20px 20px 0;
+}
+
+.description .like-dislike i:hover {
+  cursor: pointer;
+  color: #3362b9;
+}
+
+.description #liked {
+  color: #3362b9;
+}
+
+.description #disliked {
+  color: #3362b9;
+}
+
+@media (min-width: 320px) {
+  .video-container video {
+    height: 500px;
+  }
+  .header a {
+    font-size: 4rem;
+  }
+  .header div {
+    padding-top: 1.5rem;
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 481px) {
+  .video-container video {
+    height: 700px;
+  }
+  .header div {
+    padding-top: 0;
+    font-size: 1.3rem;
+  }
+}

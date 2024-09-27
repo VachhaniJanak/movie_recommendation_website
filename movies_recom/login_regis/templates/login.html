@@ -1,0 +1,38 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block title %}Login{% endblock %}
+
+{% block css_file %} 
+    <link rel="icon" type="image/x-icon" href="{% static "logo.ico" %}">  
+    <link rel="stylesheet" href="{% static "style.css" %}"> 
+    <link rel="stylesheet" href="{% static "login.css" %}"> 
+{% endblock %} 
+
+{% block content %}
+    <div class="container">
+      <div class="center">
+        <h1>Login</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+          <div class="txt_field">
+            {{login_form.email}}
+            <span></span>
+            <div class="error">{{login_form.email.errors}}</div>
+            <div class="error">{{email_error}}</div>
+          </div>
+          <div class="txt_field">
+            {{login_form.password}}
+            <span></span>
+            <div class="error">{{login_form.password.errors}}</div>
+            <div class="error">{{password_error}}</div>
+          </div>
+          <div class="pass"><a href="verify-email">Forget Password?</a></div>
+          <input name="submit" type="Submit" value="Login" />
+          <div class="signup_link">
+            Not a Member ? <a href="registration">Signup</a>
+          </div>
+        </form>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,89 @@
+* {
+  z-index: -1;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background-color: #1c1c1c;
+  color: #b1b1b1;
+  font-family: sans-serif;
+}
+
+.container-title {
+  position: relative;
+  z-index: -2;
+  margin: 1rem 0 1rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.mylist {
+  z-index: 1;
+  display: inline-block;
+  position: absolute;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  right: 0%;
+  background: transparent;
+}
+
+.mylist i {
+  z-index: 1;
+  font-size: 1rem;
+  color: #ffffff;
+  background: transparent;
+}
+
+.mylist i:hover {
+  cursor: pointer;
+  color: rgb(255, 0, 0);
+}
+
+#msg {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  margin: 1rem;
+  height: 70px;
+  width: 230px;
+  padding: 1rem;
+  background-color: #424040;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+#msg p {
+  background: transparent;
+  padding-bottom: 0.3rem;
+}
+
+#msg :nth-child(1) {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+.watched {
+  height: 2px;
+  background-color: #ff0000;
+}
+
+.loader {
+  z-index: -20;
+  position: absolute;
+  top: 100%;
+  left: 48.3%;
+  background: transparent;
+}
+
+.loader div {
+  width: 50px;
+  aspect-ratio: 1;
+  --_c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
+  background: var(--_c) top, var(--_c) left, var(--_c) right, var(--_c) bottom;
+  background-size: 12px 12px;
+  animation: l7 1s infinite;
+}
+@keyframes l7 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}

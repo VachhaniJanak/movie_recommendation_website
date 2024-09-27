@@ -1,0 +1,21 @@
+input[type="submit"] {
+  width: 80%;
+  height: 50px;
+  margin-top: 10%;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.text {
+  text-align: center;
+  color: #a6a6a6;
+  margin-top: 10px;
+}
+
+.message {
+    text-align: center;
+    color: #ff0000;
+    margin-top: 1%;
+}

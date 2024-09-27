@@ -1,0 +1,178 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: linear-gradient(
+    109.6deg,
+    rgb(43, 1, 91) 13.4%,
+    rgb(122, 2, 54) 100.2%
+  );
+  height: 100vh;
+  color: #e9f4fb;
+  overflow: hidden;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 29vw;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.center h1 {
+  text-align: center;
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid #bb86fc;
+}
+
+.center form {
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+form {
+  background-color: #1e1e1e;
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+}
+
+form .txt_field {
+  left: -10px;
+  margin: 4px;
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+}
+
+input {
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #333;
+  border: none;
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  color: #e0e0e0;
+  font-size: 16px;
+  outline: none;
+  left: -100px;
+}
+
+.txt_field span::before {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: 0;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 0px;
+  height: 2px;
+  background: #bb86fc;
+  transition: 0.5s;
+}
+
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label {
+  top: -5px;
+  color: #bb86fc;
+}
+
+.txt_field input:focus ~ span::before,
+.txt_field input:valid ~ span::before {
+  width: 100%;
+}
+
+input[type="submit"] {
+  width: 80%;
+  height: 50px;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background: #bb86fc;
+  color: #e9f4fb;
+  transition: 0.5s;
+}
+
+.HomeAbout {
+  width: 100vw;
+  height: 25vh;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 1%;
+}
+
+.error ul {
+  padding: 0;
+  margin: 1%;
+}
+
+.error ul li {
+  color: red;
+  list-style: none;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .center {
+    width: 70vw;
+    padding: 20px;
+  }
+
+  .center form {
+    padding: 0 20px;
+  }
+
+  input[type="submit"] {
+    height: 45px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .center {
+    width: 90vw;
+    padding: 15px;
+  }
+
+  .center h1 {
+    font-size: 24px;
+  }
+
+  .center form {
+    padding: 0 15px;
+  }
+
+  form .txt_field {
+    margin: 20px 0;
+  }
+
+  input {
+    height: 35px;
+    font-size: 14px;
+  }
+
+  input[type="submit"] {
+    height: 40px;
+    font-size: 14px;
+  }
+}

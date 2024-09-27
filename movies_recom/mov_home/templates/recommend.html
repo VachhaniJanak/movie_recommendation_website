@@ -1,0 +1,23 @@
+{% load static %}
+
+<img class="play-icon" src="{% static "play-button.svg" %}"/>
+<a href="/home/watch?movieid={{movie.id}}">
+  <img class="thumbnail" src="{{movie.landscape_poster.url}}" />
+  <div
+    class="notwatched {% if movie.id in watch_ids %}watched{% endif %}"
+  ></div>
+  <div class="movies-details">
+    <div class="title">{{movie.title}}</div>
+    <div class="details">
+      <span class="runtime">{{movie.runtime}}</span>
+      <span class="language">lg {{movie.language}}</span>
+    </div>
+    <div class="details">
+      <span class="year">{{movie.year}}</span>
+      <span class="rating">
+        <span>&#9733;</span>
+        <span>{{movie.rating}}</span>
+      </span>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,85 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block title %}Home{% endblock title %} 
+
+{% block css_file %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="shortcut icon" href="{% static "logo.png" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static "css/index.css" %}" />
+    <link rel="stylesheet" href="{% static "css/header.css" %}" />
+    <link rel="stylesheet" href="{% static "css/horizontal.css" %}" />
+    <link rel="stylesheet" href="{% static "css/recommended.css" %}" />
+
+{% endblock css_file %} 
+
+{% block content %} 
+<div class="main" id="main">
+    {% comment %} Header {% endcomment %}
+    {% include "header.html" %}
+
+    {% comment %} Trending Movies  {% endcomment %}
+    <div class="container-title">Trending Now</div>
+      <div class="horizontal-container" id="trending-now">
+        {% for movie in top_ten %}
+        <div class="horizontal-container-item">
+          <div class="rank">{{forloop.counter}}</div>
+          {% include "horizontal.html" %}
+        </div>
+        {% endfor %}
+    </div>
+
+    {% comment %} Mylist Movies {% endcomment %}
+    {% if mylist_movies %}
+    <div class="container-title">MyList</div>
+    {% endif %}
+    <div class="horizontal-container" id="mylist-container">
+      {% comment %} {% for movie in mylist_movies %}
+        <div class="recommended-item mylists-items">
+          {% include "recommend.html" %}
+        </div>
+      {% endfor %} {% endcomment %}
+    </div> 
+
+    {% comment %} Oscar Movies {% endcomment %}
+    <div class="container-title">Oscar Winning</div>
+    <div class="horizontal-container", id="horizontal-container">
+      {% for movie in oscar %}
+      <div class="horizontal-container-item">
+        {% include "horizontal.html" %}
+      </div>
+      {% endfor %}
+    </div>
+
+    {% comment %} Recommendation {% endcomment %}
+    {% if recommended_movies %}
+      <div class="container-title">Recommended</div>
+    {% endif %}
+    <div class="recommended-container" id="recommended-container">
+      {% for movie in recommended %}
+        <div class="recommended-item">
+          <div class="mylist" movie-id={{movie.id}}">
+            <i class="fa fa-plus"></i>
+          </div>
+          {% include "recommend.html" %}
+        </div>  
+      {% endfor %}
+    </div>
+    
+    <div id="loader-container">
+      <div></div>
+    </div>
+    {% comment %} Message {% endcomment %}
+    {% include "message.html" %}
+</div>
+
+{% endblock content %}
+
+{% block js_file %}
+    <script src="{% static "js/url.js" %}"></script>
+    <script src="{% static "js/search.js" %}"></script>
+    <script type="module" src="{% static "js/addcontent.js" %}"></script>
+{% endblock js_file %}

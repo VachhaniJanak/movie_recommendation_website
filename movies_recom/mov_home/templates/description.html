@@ -1,0 +1,110 @@
+<div class="feedback">
+  <h3>Rate Movie</h3>
+  <span class="card">
+    {% if rated == 1 %}
+    <span onclick="rate(1)" class="star one">★ </span>
+    <span onclick="rate(2)" class="star">★ </span>
+    <span onclick="rate(3)" class="star">★ </span>
+    <span onclick="rate(4)" class="star">★ </span>
+    <span onclick="rate(5)" class="star">★ </span>
+    {% elif rated == 2 %}
+    <span onclick="rate(1)" class="star one">★ </span>
+    <span onclick="rate(2)" class="star two">★ </span>
+    <span onclick="rate(3)" class="star ">★ </span>
+    <span onclick="rate(4)" class="star ">★ </span>
+    <span onclick="rate(5)" class="star ">★ </span>
+    {% elif rated == 3 %}
+    <span onclick="rate(1)" class="star one">★ </span>
+    <span onclick="rate(2)" class="star two">★ </span>
+    <span onclick="rate(3)" class="star three">★ </span>
+    <span onclick="rate(4)" class="star ">★ </span>
+    <span onclick="rate(5)" class="star ">★ </span>
+    {% elif rated == 4 %}
+    <span onclick="rate(1)" class="star one">★ </span>
+    <span onclick="rate(2)" class="star two">★ </span>
+    <span onclick="rate(3)" class="star three">★ </span>
+    <span onclick="rate(4)" class="star four">★ </span>
+    <span onclick="rate(5)" class="star ">★ </span>
+    {% elif rated == 5 %}
+    <span onclick="rate(1)" class="star one">★ </span>
+    <span onclick="rate(2)" class="star two">★ </span>
+    <span onclick="rate(3)" class="star three">★ </span>
+    <span onclick="rate(4)" class="star four">★ </span>
+    <span onclick="rate(5)" class="star five">★ </span>
+    {% else %}
+    <span onclick="rate(1)" class="star">★ </span>
+    <span onclick="rate(2)" class="star">★ </span>
+    <span onclick="rate(3)" class="star">★ </span>
+    <span onclick="rate(4)" class="star">★ </span>
+    <span onclick="rate(5)" class="star">★ </span>
+    {% endif %}
+    <span onclick="submit()" class="submitbtn"> Submit </span>
+  </span>
+</div>
+<div class="description" id="description">
+  <div class="like-dislike">
+    <i
+      id="{{liked}}"
+      movie-id="{{selected_movie.id}}"
+      class="fa fa-thumbs-up"
+    ></i>
+    <i
+      id="{{disliked}}"
+      movie-id="{{selected_movie.id}}"
+      class="fa fa-thumbs-down"
+    ></i>
+  </div>
+  <div class="Plot">
+    <h3>Plot</h3>
+    <p>{{selected_movie.plot}}</p>
+  </div>
+  <div class="Information">
+    <h3>Information</h3>
+    <table>
+      <tr>
+        <td><span>Movie Name</span></td>
+        <td>{{selected_movie.title}}</td>
+      </tr>
+      <tr>
+        <td><span>Duration</span></td>
+        <td>{{selected_movie.runtime}}</td>
+      </tr>
+      <tr>
+        <td><span>Relase Date</span></td>
+        <td>{{selected_movie.year}}</td>
+      </tr>
+      <tr>
+        <td><span>Genre</span></td>
+        <td>{{selected_movie.genre}}</td>
+      </tr>
+      <tr>
+        <td><span>Country</span></td>
+        <td>{{selected_movie.country}}</td>
+      </tr>
+      <tr>
+        <td><span>Languages</span></td>
+        <td>{{selected_movie.language}}</td>
+      </tr>
+      <tr>
+        <td><span>Directors</span></td>
+        <td>{{selected_movie.director}}</td>
+      </tr>
+      <tr>
+        <td><span>Writers</span></td>
+        <td>{{selected_movie.writer}}</td>
+      </tr>
+      <tr>
+        <td><span>Actors</span></td>
+        <td>{{selected_movie.actors}}</td>
+      </tr>
+      <tr>
+        <td><span>Adult</span></td>
+        <td>{{selected_movie.adult}}</td>
+      </tr>
+      <tr>
+        <td><span>Oscar</span></td>
+        <td>{{selected_movie.oscars}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

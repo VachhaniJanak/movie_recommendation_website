@@ -1,0 +1,30 @@
+{% load static %}
+
+ <div class="header">
+    <div class="logo">
+      <a href="/home"><img src="{% static "logo.png" %}" alt=""></a>
+    </div>
+    <div class="search">
+            <input type="text" name="query" placeholder="Find Your Favourtie Movies"  id="search-input" oninput="showSuggestions()">
+        <i id="icon" onclick="redirect()" class="fa fa-search"></i>
+        <div id="search-suggestion-container">
+            <ul id="suggestion-list"></ul>
+        </div>
+    </div>
+    <div class="options">
+        <div id="genre-container">
+            <div onclick="showGenreList()" id="genre">GENRE</div>
+            <div id="genre-list-container">
+                <ul id="genre-list">
+                  {% for key, value in genres.items %}
+                    <li><a href="/home/genre?key={{key}}">{{value}}</a></li>
+                  {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="user">
+      <span id="logout"><a href="logout" >LOGOUT</a></span>
+      <span class="user-image">{{user_name}}</span>
+    </div>
+</div> 

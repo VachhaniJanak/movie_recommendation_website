@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Forget Password{% endblock  %}
+
+{% block css_file %}
+    <link rel="icon" type="image/x-icon" href="{% static "logo.ico" %}">
+    <link rel="stylesheet" href="{% static "style.css" %}">
+    <link rel="stylesheet" href="{% static "verifyemail.css" %}">
+{% endblock  %}
+
+{% block content %}
+    <div class="container">
+      <div class="center">
+        <h1>Verfiy Email</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="txt_field">
+                {{email_verif_form.email}}
+                <span></span>
+                <div class="error">{{email_verif_form.email.errors}}</div>
+                <div class="text">A 6-digit code will sent to your email</div>
+                <div class="message">{{message}}</div>
+            </div>
+            <input name="submit" type="Submit" value="Verfiy" />
+        </form>
+      </div>
+    </div>
+{% endblock %}
