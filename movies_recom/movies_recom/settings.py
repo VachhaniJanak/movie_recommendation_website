@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 	'mov_home',
 	'engines',
 	'apis',
+    'payment',
 ]
 
 MIDDLEWARE = [

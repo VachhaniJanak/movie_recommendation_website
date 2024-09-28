@@ -24,7 +24,6 @@ class UserInfo(models.Model):
 		super(UserInfo, self).save(*args, **kwargs)
 
 
-
 class UserWatched(models.Model):
 	user = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
 	movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
@@ -77,3 +76,13 @@ class UserSession(models.Model):
 
     def __str__(self):
         return f"Session for {self.user.username} ({self.session_key})"
+
+
+class Payment(models.Model):
+	user = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+	amount = models.PositiveIntegerField(default=0)
+	timestamp = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return f"Payment for {self.user.username} ({self.amount})"
+	

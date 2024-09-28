@@ -1,0 +1,39 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block title %}PAYMENT{% endblock%} 
+
+{% block css_file %} 
+    <link rel="icon" type="image/x-icon" href="{% static "logo.ico" %}">  
+    <script src="https://use.fontawesome.com/fbf13eceb7.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static "css/payment.css" %}">
+{% endblock css_file %}
+
+{% block content %}
+<div class="container">
+  <div class="colored"></div>
+  <div class="info">
+    <div class="price">
+        <span>Watch movies for just {{params.TXN_AMOUNT}} $</span>
+        <span>Valid for 3 months</span>
+    </div>
+  </div>
+  <div class="form">
+    <h3>Payment informations</h3>
+    <label>EMAIL ID</label>
+      {{params.CUST_ID}}
+    <label>AMOUNT</label>
+      {{params.TXN_AMOUNT}} $
+    <label>PAYMENT ID</label>
+      {{params.ORDER_ID}}
+    <form action="" method="post">   
+      {% csrf_token %}
+      <p></p>
+      <p class="message">{{message}}</p>
+      <button>PAY NOW</button>
+    </form>
+  </div>
+</div>
+{% endblock content %} 

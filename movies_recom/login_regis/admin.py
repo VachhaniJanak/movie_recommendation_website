@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import UserInfo, UserWatched, UserLike, UserDislike, UserMyList, RateMovie, UserSession
+from .models import UserInfo, UserWatched, UserLike, UserDislike, UserMyList, RateMovie, UserSession, Payment
 from django.contrib.sessions.models import Session
 
 
@@ -13,6 +13,7 @@ admin.site.register(UserDislike)
 admin.site.register(UserMyList)
 admin.site.register(RateMovie)
 admin.site.register(UserSession)
+admin.site.register(Payment)
 
 
 class SessionAdmin(admin.ModelAdmin):

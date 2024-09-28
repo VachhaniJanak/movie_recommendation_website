@@ -1,0 +1,240 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: linear-gradient(
+    109.6deg,
+    rgb(43, 1, 91) 13.4%,
+    rgb(122, 2, 54) 100.2%
+  );
+  height: 100vh;
+  color: #e9f4fb;
+  overflow: hidden;
+}
+
+.container {
+  width: 80%;
+  min-width: 80%;
+  min-height: 610px;
+  background-color: #1d1d1d;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* info Start Here */
+.info {
+  background: transparent;
+  z-index: 999;
+  position: absolute;
+  top: 420px;
+  text-align: center;
+  float: left;
+}
+
+.price span {
+  font-family: roboto;
+  font-size: 30px;
+  display: block;
+  padding: 0px 15px;
+  color: #000;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
+}
+.price span:last-of-type {
+  font-size: 20px;
+  font-weight: 600;
+}
+/* Info Ends here */
+
+/* Opacity */
+.colored {
+  background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
+  width: 600px;
+  height: 610px;
+  transform: skew(31deg);
+  position: relative;
+  top: 0;
+  left: -200px;
+  float: left;
+}
+
+/* opacity ends */
+
+/* -----------------------------------------------------------------*/
+
+/* form Start here */
+.form h3 {
+  font-size: 20px;
+  font-family: roboto;
+  /* font-weight: 700; */
+  letter-spacing: 1.3px;
+  word-spacing: 3px;
+  margin-top: 40px;
+}
+label {
+  display: block;
+  color: #7f7d7d;
+  font-weight: 700;
+  font-family: roboto;
+  font-size: 14px;
+  letter-spacing: 1px;
+  word-spacing: 3px;
+  margin-top: 30px;
+}
+select {
+  color: #ddd;
+  border: 0;
+  border-radius: 10px;
+  background-color: hsl(0, 0%, 20%);
+  outline: none;
+  padding: 11px 30px 11px 30px;
+  font-size: 14px;
+  font-weight: 600;
+  -webkit-appearance: none;
+  margin-top: 5px;
+}
+
+.select {
+  position: relative;
+}
+.select:after {
+  content: "\f078";
+  position: absolute;
+  right: 1em;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  font-family: "FontAwesome";
+  z-index: 10;
+  color: #ddd;
+}
+
+input {
+  color: #ddd;
+  border: 0px;
+  border-radius: 10px;
+  background-color: #333333;
+  outline: none;
+  padding: 10px 16px 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.5s ease-in;
+}
+input:focus {
+  border-bottom: 2px solid #bb86fc;
+  background-color: #333333;
+}
+.small {
+  width: 150px;
+  padding: 11px 6px 11px 6px;
+  border-radius: 10px;
+}
+.expiry {
+  float: left;
+  width: 30%;
+}
+.sec input {
+  text-align: center;
+  width: 128px;
+  letter-spacing: 3px;
+  word-spacing: 3px;
+  margin-top: 6px;
+}
+
+button {
+  background-color: #bb86fc;
+  outline: none;
+  border: 0;
+  color: #fff;
+  font-size: 16px;
+  font-family: roboto;
+  font-weight: 600;
+  letter-spacing: 1px;
+  word-spacing: 3px;
+  padding: 10px;
+  width: 34%;
+  display: block;
+  margin: auto;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333333;
+  color: #bb86fc;
+  transition: 0.5s;
+}
+
+.form p {
+  margin-top: 80px;
+  margin-bottom: 4px;
+}
+/* Form Ends Here */
+.message{
+  color: red;
+  font-size: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  
+}
+/* Media Query For Mobile */
+@media only screen and (max-width: 960px) {
+  .colored,
+  .expiry {
+    float: none;
+  }
+
+  .form {
+    text-align: center;
+  }
+  .info {
+    left: 33%;
+  }
+  .info .imag img {
+    margin-left: -15%;
+  }
+  .price span {
+    padding: 0px;
+  }
+  .form p {
+    margin-top: 30px;
+  }
+  button {
+    margin-bottom: 30px;
+    width: 60%;
+  }
+}
+
+
+.loader {
+  z-index: -20;
+  position: absolute;
+  top: 50%;
+  left: 48.3%;
+  background: transparent;
+}
+
+.loader div {
+  width: 50px;
+  aspect-ratio: 1;
+  --_c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
+  background: var(--_c) top, var(--_c) left, var(--_c) right, var(--_c) bottom;
+  background-size: 12px 12px;
+  animation: l7 1s infinite;
+}
+@keyframes l7 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}

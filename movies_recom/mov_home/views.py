@@ -1,10 +1,11 @@
+from typing import Any
 from django.utils import timezone
 from datetime import timedelta
 from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
-from login_regis.models import UserInfo, UserMyList, UserWatched, UserLike, UserDislike, RateMovie
+from login_regis.models import UserInfo, UserMyList, UserWatched, UserLike, UserDislike, RateMovie, Payment
 from django.views import View
 from .models import Movie, vectordatabase, MostWatched
 from engines.views import Engine
@@ -12,9 +13,12 @@ from torch import device, cuda
 
 from threading import Thread
 
+from datetime import datetime, timedelta
+
 
 device = device("cuda") if cuda.is_available() else device("cpu")
 slice_size = 16
+num_days = 90
 
 genres_types = {"action": "Action",
                 "adventure": "Adventure",
@@ -65,8 +69,11 @@ def top_ten_movies_of_last_week(days=7, upto=10):
 			# Count occurrences of each movie
 			# Order by the count in descending order and limit to 10
 			top_movies = tuple(UserWatched.objects.filter(timestamp__gte=one_week_ago).order_by('-timestamp').values('movie').annotate(watch_count=Count('movie')).order_by('-watch_count')[:upto]) 
+
 			if top_movies:
 				MostWatched.objects.all().delete()
+
+			# Insert the top 10 movies into the 'MostWatched' table
 			for movie in top_movies:
 				count = movie['watch_count']
 				movie = Movie.objects.get(id=movie['movie'])
@@ -74,32 +81,54 @@ def top_ten_movies_of_last_week(days=7, upto=10):
 
 		flage = True
 
+def is_plainValid(user, render_obj):
+	payment_timestamp = Payment.objects.filter(user=user).first()
+	if payment_timestamp:
+		current_time = datetime.now(payment_timestamp.timestamp.tzinfo)
+		time_difference = current_time - payment_timestamp.timestamp
+		if time_difference >= timedelta(days=num_days):
+			return HttpResponseRedirect(reverse('payment_page', args=('Payment Expired',)))
+		else:
+			return render_obj
+	else:
+		return HttpResponseRedirect(reverse('payment_page', args=('Payment Expired',)))
+
 top_ten_movies_of_last_week()
 
 class HomeView(View):
-	def get(self, request):
-		userinfo = request.session
-		user = UserInfo.objects.filter(id=userinfo.get('id')).first()
-		if user:
-			now = timezone.now()
-			day = now.strftime("%a")
-			if flage:
-				Thread(target=top_ten_movies_of_last_week).start()
-			create_session(request, user)
-			request.session['recommend_movies_ids'] = engine_model.recommended_movies_from_history(user.id, mylist_wight=16, like_wight=16, dislike_wight=32, watched_wight=256)
-			request.session.modified = True
-			top_ten = Movie.objects.filter(
+
+	def __init__(self, **kwargs: Any) -> None:
+		super().__init__(**kwargs)
+		self.user : UserInfo
+		self.top_ten = Movie.objects.filter(
 				id__in=tuple(MostWatched.objects.all().order_by('-count')[:10].values_list('movie', flat=True))
 				)
-			return render(request, 'index.html', {
-				'user_name': user.username[0].upper(),
-				'genres': genres_types,
-				'top_ten': top_ten,
-				'mylist_movies':UserMyList.objects.filter(user=user).first(),
-				'recommended_movies':len(request.session['recommend_movies_ids'])
-			})
+
+	def get(self, request):
+		userinfo = request.session
+		self.user = UserInfo.objects.filter(id=userinfo.get('id')).first()
+		if self.user:
+			if flage:
+				Thread(target=top_ten_movies_of_last_week).start()
+			
+			create_session(request, self.user)
+
+			request.session['recommend_movies_ids'] = engine_model.recommended_movies_from_history(self.user.id, mylist_wight=16, like_wight=16, dislike_wight=32, watched_wight=256)
+			request.session.modified = True
+			
+			return is_plainValid(self.user, self.redirect_to_home(request))
 		else:
 			return HttpResponseRedirect(reverse('login'))
+		
+	def redirect_to_home(self, request):
+		return render(request, 'index.html', {
+				'user_name': self.user.username[0].upper(),
+				'genres': genres_types,
+				'top_ten': self.top_ten,
+				'mylist_movies':UserMyList.objects.filter(user=self.user).first(),
+				'recommended_movies':len(request.session['recommend_movies_ids'])
+			})
+		
 
 class ResultView(View):
 	def get(self, request):
@@ -137,6 +166,7 @@ class GenreView(View):
 		
 
 class WatchView(View):
+
 	def get(self, request):
 		movie_id = request.GET.get('movieid')
 		userinfo = request.session
@@ -153,14 +183,15 @@ class WatchView(View):
 
 			rated = RateMovie.objects.filter(user=user, movie=selected_movie).first()
 			rated = rated.rate if rated else 0
+			return is_plainValid(user, self.redict_to_watch(request, liked, disliked, selected_movie, rated))
+		else:
+			return HttpResponseRedirect(reverse('login'))
 
-			return render(request, 'watch.html', {
+	def redict_to_watch(self, request, liked, disliked, selected_movie, rated):
+		return render(request, 'watch.html', {
 			'liked': liked,
 			'disliked': disliked,
 			'selected_movie': selected_movie,
 			'rated': rated
-		})
-		else:
-			return HttpResponseRedirect(reverse('login'))
-
+					})
 

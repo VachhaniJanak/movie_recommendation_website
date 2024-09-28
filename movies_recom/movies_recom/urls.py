@@ -24,5 +24,6 @@ urlpatterns = [
 	              path('auth/', include('login_regis.urls')),
 	              path('', include('login_regis.urls')),
 	              path('home/', include('mov_home.urls')),
-	              path('api/', include('apis.urls'))
+	              path('api/', include('apis.urls')),
+                  path('payment/', include('payment.urls'))
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
