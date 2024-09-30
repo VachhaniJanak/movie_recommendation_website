@@ -31,7 +31,7 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
 	# Add any other trusted origins as needed
-	
+
 ]
 
 # Application definition
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 	'mov_home',
 	'engines',
 	'apis',
-    'payment',
+	'payment',
 ]
 
 MIDDLEWARE = [

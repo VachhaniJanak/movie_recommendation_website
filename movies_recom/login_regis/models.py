@@ -67,15 +67,15 @@ class RateMovie(models.Model):
 
 	def __str__(self):
 		return f'{self.user} {self.movie} {self.rate}'
-	
+
 
 class UserSession(models.Model):
-    user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, related_name='sessions')
-    session_key = models.CharField(max_length=512, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+	user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, related_name='sessions')
+	session_key = models.CharField(max_length=512, unique=True)
+	created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Session for {self.user.username} ({self.session_key})"
+	def __str__(self):
+		return f"Session for {self.user.username} ({self.session_key})"
 
 
 class Payment(models.Model):
@@ -85,4 +85,3 @@ class Payment(models.Model):
 
 	def __str__(self):
 		return f"Payment for {self.user.username} ({self.amount})"
-	

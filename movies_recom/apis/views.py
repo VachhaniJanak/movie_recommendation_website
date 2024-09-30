@@ -1,30 +1,29 @@
-from django.views import View
+import json
 
+from django.db.models import Case, When
 from django.http import JsonResponse
+from django.views import View
 from login_regis.models import UserInfo, RateMovie, UserMyList
 from mov_home.models import Movie
 from mov_home.views import engine_model, slice_size
-from django.db.models import Case, When
-import json
 
 
 def json_return(user_id, movies):
 	return JsonResponse(
 		{
-			'movies':
-				[
-					{
-						'id': movie.id,
-						'title': movie.title,
-						'watched': 'watched' if movie.watched_by.filter(id=user_id) else 'notwatched',
-						'landscape_poster': movie.landscape_poster.url,
-						'vertical_poster': movie.vertical_poster.url,
-						'year': movie.year,
-						'language': movie.language,
-						'runtime': str(movie.runtime),
-						'rating': movie.rating,
-					} for movie in list(movies)
-				]
+			'movies': [
+				{
+					'id': movie.id,
+					'title': movie.title,
+					'watched': 'watched' if movie.watched_by.filter(id=user_id) else 'notwatched',
+					'landscape_poster': movie.landscape_poster.url,
+					'vertical_poster': movie.vertical_poster.url,
+					'year': movie.year,
+					'language': movie.language,
+					'runtime': str(movie.runtime),
+					'rating': movie.rating,
+				} for movie in list(movies)
+			]
 		}
 	)
 
@@ -55,7 +54,8 @@ class GetGenreView(View):
 		userid = userinfo.get('id')
 		if userid:
 			count = json.loads(request.body).get('present_count')
-			movies = Movie.objects.filter(genre__contains=userinfo['genre_name']).order_by('-year')[count:count + slice_size]
+			movies = Movie.objects.filter(genre__contains=userinfo['genre_name']).order_by('-year')[
+			         count:count + slice_size]
 			return json_return(userid, movies)
 		else:
 			return JsonResponse({})
@@ -72,13 +72,14 @@ class GetOscarMoviesView(View):
 		else:
 			return JsonResponse({})
 
+
 class GetRecommendationView(View):
 	def post(self, request):
 		userinfo = request.session
 		userid = userinfo.get('id')
 		if userid:
 			count = json.loads(request.body).get('present_count')
-			movies_ids = userinfo['recommend_movies_ids'][count: count+slice_size]
+			movies_ids = userinfo['recommend_movies_ids'][count: count + slice_size]
 			order = Case(*[When(id=id, then=pos) for pos, id in enumerate(movies_ids)])
 			movies = Movie.objects.filter(id__in=movies_ids).order_by(order)
 			return json_return(userid, movies)
@@ -92,7 +93,7 @@ class GetWatchRecommendationView(View):
 		userid = userinfo.get('id')
 		if userid:
 			count = json.loads(request.body).get('present_count')
-			movies_ids = userinfo['watch_recommend_ids'][count: count+slice_size]
+			movies_ids = userinfo['watch_recommend_ids'][count: count + slice_size]
 			order = Case(*[When(id=id, then=pos) for pos, id in enumerate(movies_ids)])
 			movies = Movie.objects.filter(id__in=movies_ids).order_by(order)
 			return json_return(userid, movies)
@@ -107,7 +108,9 @@ class GetMyListView(View):
 		if userid:
 			count = json.loads(request.body).get('present_count')
 			user = UserInfo.objects.get(id=userinfo['id'])
-			movies_ids = tuple(UserMyList.objects.filter(user=user).order_by('-timestamp').values_list('movie', flat=True))[count: count+slice_size]
+			movies_ids = tuple(
+				UserMyList.objects.filter(user=user).order_by('-timestamp').values_list('movie', flat=True))[
+			             count: count + slice_size]
 			order = Case(*[When(id=id, then=pos) for pos, id in enumerate(movies_ids)])
 			movies = Movie.objects.filter(id__in=movies_ids).order_by(order)
 			return json_return(userid, movies)
@@ -161,7 +164,7 @@ class LikeMovieView(View):
 		userinfo = request.session
 		userid = userinfo.get('id')
 		if userid:
-			movie_id = json.loads(request.body).get('movieid')		
+			movie_id = json.loads(request.body).get('movieid')
 			user = UserInfo.objects.get(id=userid)
 			movie = Movie.objects.get(id=movie_id)
 			if user.like.filter(id=movie_id).exists():
@@ -179,7 +182,7 @@ class DislikeMovieView(View):
 		userinfo = request.session
 		userid = userinfo.get('id')
 		if userid:
-			movie_id = json.loads(request.body).get('movieid')		
+			movie_id = json.loads(request.body).get('movieid')
 			user = UserInfo.objects.get(id=userid)
 			movie = Movie.objects.get(id=movie_id)
 			if user.dislike.filter(id=movie_id).exists():
@@ -210,4 +213,3 @@ class RateMovieView(View):
 			return JsonResponse({})
 		else:
 			return JsonResponse({})
-

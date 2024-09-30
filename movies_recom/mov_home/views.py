@@ -1,22 +1,19 @@
+from datetime import datetime, timedelta
+from threading import Thread
 from typing import Any
-from django.utils import timezone
-from datetime import timedelta
+
 from django.db.models import Count
 from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.shortcuts import render
-from login_regis.models import UserInfo, UserMyList, UserWatched, UserLike, UserDislike, RateMovie, Payment
+from django.urls import reverse
+from django.utils import timezone
 from django.views import View
-from .models import Movie, vectordatabase, MostWatched
 from engines.views import Engine
-from torch import device, cuda
+from login_regis.models import UserInfo, UserMyList, UserWatched, UserLike, UserDislike, RateMovie, Payment
 
-from threading import Thread
+from .models import Movie, vectordatabase, MostWatched, base_path
 
-from datetime import datetime, timedelta
-
-
-device = device("cuda") if cuda.is_available() else device("cpu")
+device = "cpu"
 slice_size = 16
 num_days = 90
 
@@ -40,8 +37,9 @@ genres_types = {"action": "Action",
                 "war": "War",
                 "western": "Western"}
 
-engine_model = Engine(device=device, vectordatabase=vectordatabase, min_max_rating=(3, 5), upto=32,
-                      each_upto=32, table_name=Movie, users_attrs_names=(UserMyList, UserLike, UserDislike, UserWatched))
+engine_model = Engine(device=device, base_path=base_path, vectordatabase=vectordatabase, min_max_rating=(3, 5), upto=32,
+                      each_upto=32, users_attrs_names=(UserMyList, UserLike, UserDislike, UserWatched))
+
 
 def create_session(request, user):
 	request.session['id'] = user.id
@@ -52,7 +50,9 @@ def create_session(request, user):
 	request.session['search_movies_ids'] = tuple()
 	request.session['watch_recommend_ids'] = tuple()
 
+
 flage = True
+
 
 def top_ten_movies_of_last_week(days=7, upto=10):
 	global flage
@@ -68,7 +68,9 @@ def top_ten_movies_of_last_week(days=7, upto=10):
 			# Group by 'movie'
 			# Count occurrences of each movie
 			# Order by the count in descending order and limit to 10
-			top_movies = tuple(UserWatched.objects.filter(timestamp__gte=one_week_ago).order_by('-timestamp').values('movie').annotate(watch_count=Count('movie')).order_by('-watch_count')[:upto]) 
+			top_movies = tuple(
+				UserWatched.objects.filter(timestamp__gte=one_week_ago).order_by('-timestamp').values('movie').annotate(
+					watch_count=Count('movie')).order_by('-watch_count')[:upto])
 
 			if top_movies:
 				MostWatched.objects.all().delete()
@@ -80,6 +82,7 @@ def top_ten_movies_of_last_week(days=7, upto=10):
 				MostWatched(movie=movie, count=count).save()
 
 		flage = True
+
 
 def is_plainValid(user, render_obj):
 	payment_timestamp = Payment.objects.filter(user=user).first()
@@ -93,16 +96,18 @@ def is_plainValid(user, render_obj):
 	else:
 		return HttpResponseRedirect(reverse('payment_page', args=('Payment Expired',)))
 
+
 top_ten_movies_of_last_week()
+
 
 class HomeView(View):
 
 	def __init__(self, **kwargs: Any) -> None:
 		super().__init__(**kwargs)
-		self.user : UserInfo
+		self.user: UserInfo
 		self.top_ten = Movie.objects.filter(
-				id__in=tuple(MostWatched.objects.all().order_by('-count')[:10].values_list('movie', flat=True))
-				)
+			id__in=tuple(MostWatched.objects.all().order_by('-count')[:10].values_list('movie', flat=True))
+		)
 
 	def get(self, request):
 		userinfo = request.session
@@ -110,25 +115,29 @@ class HomeView(View):
 		if self.user:
 			if flage:
 				Thread(target=top_ten_movies_of_last_week).start()
-			
+
 			create_session(request, self.user)
 
-			request.session['recommend_movies_ids'] = engine_model.recommended_movies_from_history(self.user.id, mylist_wight=16, like_wight=16, dislike_wight=32, watched_wight=256)
+			request.session['recommend_movies_ids'] = engine_model.recommended_movies_from_history(self.user.id,
+			                                                                                       mylist_wight=16,
+			                                                                                       like_wight=16,
+			                                                                                       dislike_wight=32,
+			                                                                                       watched_wight=256)
 			request.session.modified = True
-			
+
 			return is_plainValid(self.user, self.redirect_to_home(request))
 		else:
 			return HttpResponseRedirect(reverse('login'))
-		
+
 	def redirect_to_home(self, request):
 		return render(request, 'index.html', {
-				'user_name': self.user.username[0].upper(),
-				'genres': genres_types,
-				'top_ten': self.top_ten,
-				'mylist_movies':UserMyList.objects.filter(user=self.user).first(),
-				'recommended_movies':len(request.session['recommend_movies_ids'])
-			})
-		
+			'user_name': self.user.username[0].upper(),
+			'genres': genres_types,
+			'top_ten': self.top_ten,
+			'mylist_movies': UserMyList.objects.filter(user=self.user).first(),
+			'recommended_movies': len(request.session['recommend_movies_ids'])
+		})
+
 
 class ResultView(View):
 	def get(self, request):
@@ -156,14 +165,14 @@ class GenreView(View):
 			request.session['genre_name'] = genre_name
 			request.session.modified = True
 			return render(request, 'result.html', {
-			'user_name': userinfo['username'][0].upper(),
-			'genres': genres_types,
-			'query': genre_name,
-			'result_page': False,
-		})
+				'user_name': userinfo['username'][0].upper(),
+				'genres': genres_types,
+				'query': genre_name,
+				'result_page': False,
+			})
 		else:
 			return HttpResponseRedirect(reverse('login'))
-		
+
 
 class WatchView(View):
 
@@ -193,5 +202,4 @@ class WatchView(View):
 			'disliked': disliked,
 			'selected_movie': selected_movie,
 			'rated': rated
-					})
-
+		})
