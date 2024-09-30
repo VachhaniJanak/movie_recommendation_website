@@ -29,6 +29,9 @@ A **Django-based** movie recommendation platform featuring a hybrid recommendati
 - **Trending Now**:
     - Movies watched by max number users of last week.
 
+- **Payment System**:
+    - Use a paytm payment gateway.
+
 ## 🐞 Known Bugs & Issues
 
 - **Multi-device Recommendations**:
@@ -64,7 +67,7 @@ A **Django-based** movie recommendation platform featuring a hybrid recommendati
 
    ```bash
    cd movie_recommendation_website/
-   pip install -r requirements.txt
+   pip install -r requirements.txt # "For CPU base linux machine."
    ```
 
 3. **Start the server**:
